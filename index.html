@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telecom Innovation Platform</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        header {
+            background: #0b1f33;
+            color: white;
+            padding: 20px;
+        }
+
+        header h1 {
+            margin-bottom: 5px;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1400px;
+            margin: 25px auto;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            color: #555;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #0b1f33;
+        }
+
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .module {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .module h2 {
+            font-size: 19px;
+            margin-bottom: 10px;
+            color: #0b1f33;
+        }
+
+        .module p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        button {
+            background: #0b1f33;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #17476d;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .online {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        #output {
+            background: #111;
+            color: #00ff88;
+            padding: 20px;
+            margin-top: 25px;
+            border-radius: 8px;
+            min-height: 100px;
+            white-space: pre-line;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 30px;
+            background: #0b1f33;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Telecom Innovation Platform</h1>
+    <p>Network • Customers • Fraud • Billing • IoT • Connectivity</p>
+</header>
+
+<div class="container">
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+
+        <div class="card">
+            <h3>Active Subscribers</h3>
+            <div class="number" id="subscribers">125,430</div>
+        </div>
+
+        <div class="card">
+            <h3>Network Status</h3>
+            <div class="number">98.7%</div>
+            <span class="status online">Operational</span>
+        </div>
+
+        <div class="card">
+            <h3>Fraud Alerts</h3>
+            <div class="number" id="fraudCount">7</div>
+            <span class="status danger">Attention</span>
+        </div>
+
+        <div class="card">
+            <h3>Revenue Today</h3>
+            <div class="number">KES 2.8M</div>
+        </div>
+
+        <div class="card">
+            <h3>IoT Devices</h3>
+            <div class="number">8,421</div>
+        </div>
+
+    </div>
+
+    <!-- Telecom Modules -->
+
+    <div class="modules">
+
+        <!-- 1 -->
+        <div class="module">
+            <h2>1. Network Monitoring</h2>
+            <p>
+                Monitor network availability and detect outages.
+            </p>
+
+            <button onclick="checkNetwork()">
+                Check Network
+            </button>
+        </div>
+
+        <!-- 2 -->
+        <div class="module">
+            <h2>2. Subscriber KYC</h2>
+            <p>
+                Register customers and simulate KYC verification.
+            </p>
+
+            <input id="customerName" placeholder="Customer name">
+            <input id="phoneNumber" placeholder="Phone number">
+
+            <button onclick="registerSubscriber()">
+                Register Subscriber
+            </button>
+        </div>
+
+        <!-- 3 -->
+        <div class="module">
+            <h2>3. Airtime & Data</h2>
+
+            <select id="bundle">
+                <option value="100">1GB - KES 100</option>
+                <option value="200">3GB - KES 200</option>
+                <option value="500">10GB - KES 500</option>
+            </select>
+
+            <input id="bundlePhone" placeholder="Phone number">
+
+            <button onclick="buyBundle()">
+                Purchase Bundle
+            </button>
+        </div>
+
+        <!-- 4 -->
+        <div class="module">
+            <h2>4. Customer Support</h2>
+
+            <input id="question" placeholder="Enter customer question">
+
+            <button onclick="customerSupport()">
+                Ask Support
+            </button>
+        </div>
+
+        <!-- 5 -->
+        <div class="module">
+            <h2>5. Fraud & SIM-Swap Detection</h2>
+
+            <input id="simPhone" placeholder="Phone number">
+
+            <button onclick="detectFraud()">
+                Run Fraud Check
+            </button>
+        </div>
+
+        <!-- 6 -->
+        <div class="module">
+            <h2>6. Rural Connectivity</h2>
+
+            <p>
+                Identify locations with poor network coverage and prioritize infrastructure.
+            </p>
+
+            <button onclick="ruralConnectivity()">
+                Analyze Coverage
+            </button>
+        </div>
+
+        <!-- 7 -->
+        <div class="module">
+            <h2>7. Value Added Services</h2>
+
+            <select id="service">
+                <option>Sports Updates</option>
+                <option>News Alerts</option>
+                <option>Entertainment</option>
+                <option>Education Content</option>
+            </select>
+
+            <button onclick="subscribeService()">
+                Subscribe
+            </button>
+        </div>
+
+        <!-- 8 -->
+        <div class="module">
+            <h2>8. IoT & M2M</h2>
+
+            <input id="deviceId" placeholder="IoT device ID">
+
+            <button onclick="connectDevice()">
+                Connect Device
+            </button>
+        </div>
+
+        <!-- 9 -->
+        <div class="module">
+            <h2>9. Roaming</h2>
+
+            <select id="country">
+                <option>Tanzania</option>
+                <option>Uganda</option>
+                <option>Rwanda</option>
+                <option>South Africa</option>
+                <option>United Kingdom</option>
+            </select>
+
+            <button onclick="checkRoaming()">
+                Check Roaming
+            </button>
+        </div>
+
+        <!-- 10 -->
+        <div class="module">
+            <h2>10. Billing & Revenue Assurance</h2>
+
+            <input id="amount" type="number" placeholder="Enter transaction amount">
+
+            <button onclick="calculateBilling()">
+                Verify Transaction
+            </button>
+        </div>
+
+        <!-- 11 -->
+        <div class="module">
+            <h2>11. Agent Management</h2>
+
+            <input id="agentName" placeholder="Agent name">
+
+            <button onclick="registerAgent()">
+                Register Agent
+            </button>
+        </div>
+
+        <!-- 12 -->
+        <div class="module">
+            <h2>12. Digital Inclusion</h2>
+
+            <p>
+                Provide simple digital services for customers with limited
+                internet access or digital skills.
+            </p>
+
+            <button onclick="digitalInclusion()">
+                Launch USSD Service
+            </button>
+        </div>
+
+    </div>
+
+    <!-- System Output -->
+
+    <div id="output">
+        System messages will appear here...
+    </div>
+
+</div>
+
+<footer>
+    Telecom Innovation Platform © 2026
+</footer>
+
+<script>
+
+    // Output helper
+    function show(message) {
+        document.getElementById("output").innerText = message;
+    }
+
+    // 1. Network monitoring
+    function checkNetwork() {
+
+        const uptime = (98 + Math.random() * 1.9).toFixed(2);
+
+        show(
+            "NETWORK MONITOR\n\n" +
+            "Network uptime: " + uptime + "%\n" +
+            "Core network: ONLINE\n" +
+            "Mobile data: ONLINE\n" +
+            "Voice services: ONLINE\n" +
+            "Monitoring completed."
+        );
+    }
+
+    // 2. Subscriber registration
+    function registerSubscriber() {
+
+        const name = document.getElementById("customerName").value;
+        const phone = document.getElementById("phoneNumber").value;
+
+        if (!name || !phone) {
+            show("Please enter customer name and phone number.");
+            return;
+        }
+
+        show(
+            "KYC REGISTRATION\n\n" +
+            "Customer: " + name + "\n" +
+            "Phone: " + phone + "\n" +
+            "Identity verification: PASSED\n" +
+            "KYC status: VERIFIED"
+        );
+    }
+
+    // 3. Airtime/Data
+    function buyBundle() {
+
+        const price = document.getElementById("bundle").value;
+        const phone = document.getElementById("bundlePhone").value;
+
+        if (!phone) {
+            show("Please enter a phone number.");
+            return;
+        }
+
+        show(
+            "BUNDLE PURCHASE\n\n" +
+            "Phone: " + phone + "\n" +
+            "Amount: KES " + price + "\n" +
+            "Payment: SUCCESSFUL\n" +
+            "Bundle: ACTIVATED"
+        );
+    }
+
+    // 4. Customer support
+    function customerSupport() {
+
+        const question = document.getElementById("question").value;
+
+        if (!question) {
+            show("Please enter a customer question.");
+            return;
+        }
+
+        let response =
+            "Customer support received your request.\n\n";
+
+        if (question.toLowerCase().includes("internet")) {
+            response +=
+                "Suggested solution:\n" +
+                "1. Restart the router.\n" +
+                "2. Check network signal.\n" +
+                "3. Confirm data balance.";
+        } else {
+            response +=
+                "Your request has been received.\n" +
+                "A support agent can investigate further.";
+        }
+
+        show("CUSTOMER SUPPORT\n\n" + response);
+    }
+
+    // 5. Fraud detection
+    function detectFraud() {
+
+        const phone = document.getElementById("simPhone").value;
+
+        if (!phone) {
+            show("Enter a phone number.");
+            return;
+        }
+
+        const risk = Math.floor(Math.random() * 100);
+
+        if (risk > 75) {
+
+            document.getElementById("fraudCount").innerText =
+                parseInt(document.getElementById("fraudCount").innerText) + 1;
+
+            show(
+                "FRAUD DETECTION\n\n" +
+                "Phone: " + phone + "\n" +
+                "Risk score: " + risk + "/100\n" +
+                "Status: HIGH RISK\n\n" +
+                "Possible SIM-swap indicators detected.\n" +
+                "Recommended action: additional verification."
+            );
+
+        } else {
+
+            show(
+                "FRAUD DETECTION\n\n" +
+                "Phone: " + phone + "\n" +
+                "Risk score: " + risk + "/100\n" +
+                "Status: LOW RISK"
+            );
+        }
+    }
+
+    // 6. Rural connectivity
+    function ruralConnectivity() {
+
+        show(
+            "RURAL CONNECTIVITY ANALYSIS\n\n" +
+            "Coverage gaps detected: 14\n" +
+            "Underserved population: 23,500\n" +
+            "Potential tower locations: 8\n" +
+            "Priority: HIGH\n\n" +
+            "Recommendation:\n" +
+            "Prioritize new towers and affordable broadband."
+        );
+    }
+
+    // 7. VAS
+    function subscribeService() {
+
+        const service = document.getElementById("service").value;
+
+        show(
+            "VALUE ADDED SERVICE\n\n" +
+            "Service: " + service + "\n" +
+            "Subscription: ACTIVE\n" +
+            "Content delivery: ENABLED"
+        );
+    }
+
+    // 8. IoT
+    function connectDevice() {
+
+        const device = document.getElementById("deviceId").value;
+
+        if (!device) {
+            show("Enter an IoT device ID.");
+            return;
+        }
+
+        show(
+            "IoT CONNECTIVITY\n\n" +
+            "Device: " + device + "\n" +
+            "SIM status: ACTIVE\n" +
+            "Network: CONNECTED\n" +
+            "M2M communication: ENABLED"
+        );
+    }
+
+    // 9. Roaming
+    function checkRoaming() {
+
+        const country = document.getElementById("country").value;
+
+        show(
+            "ROAMING SERVICE\n\n" +
+            "Destination: " + country + "\n" +
+            "Roaming availability: AVAILABLE\n" +
+            "Voice: ENABLED\n" +
+            "SMS: ENABLED\n" +
+            "Data: ENABLED"
+        );
+    }
+
+    // 10. Billing
+    function calculateBilling() {
+
+        const amount =
+            parseFloat(document.getElementById("amount").value);
+
+        if (!amount || amount <= 0) {
+            show("Enter a valid transaction amount.");
+            return;
+        }
+
+        const tax = amount * 0.16;
+        const total = amount + tax;
+
+        show(
+            "BILLING & REVENUE ASSURANCE\n\n" +
+            "Base amount: KES " + amount.toFixed(2) + "\n" +
+            "Tax: KES " + tax.toFixed(2) + "\n" +
+            "Total: KES " + total.toFixed(2) + "\n\n" +
+            "Transaction verification: PASSED"
+        );
+    }
+
+    // 11. Agent management
+    function registerAgent() {
+
+        const agent = document.getElementById("agentName").value;
+
+        if (!agent) {
+            show("Enter an agent name.");
+            return;
+        }
+
+        show(
+            "AGENT MANAGEMENT\n\n" +
+            "Agent: " + agent + "\n" +
+            "Registration: SUCCESSFUL\n" +
+            "Status: ACTIVE\n" +
+            "Commission tracking: ENABLED"
+        );
+    }
+
+    // 12. Digital inclusion
+    function digitalInclusion() {
+
+        show(
+            "DIGITAL INCLUSION / USSD\n\n" +
+            "USSD service launched.\n\n" +
+            "*123#\n\n" +
+            "1. Check balance\n" +
+            "2. Buy data\n" +
+            "3. Send money\n" +
+            "4. Customer support\n" +
+            "5. Report network problem\n\n" +
+            "Designed for customers without smartphones or reliable internet."
+        );
+    }
+
+</script>
+
+</body>
+</html>
